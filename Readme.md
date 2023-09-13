@@ -62,7 +62,18 @@ Print pb = new PrintBanner("hello");
 优点：不会频繁地创建和销毁对象，浪费系统资源。
 使用场景：IO 、数据库连接、Redis 连接等。
 
+## Prototype模式
+- Prototype(原型)
+- ConcretePrototype (具体的原型)
+- Client(使用者)
+
 ## Builder模式
-- Director
-- Builder（建造者）
-- ConcreteBuilder（具体的建造者）
+- Director 
+1. 不关心具体的ConcreteBuilder，只调用builder中申明的方法
+- Builder（建造者） 定义用于生成实例的接口API
+- ConcreteBuilder（具体的建造者）在ConcreteBuilder 角色中还定义了获取最终生成结果的方法
+
+client只使用了director construct方法
+director只使用了builder的方法，它不知道具体的ConcreteBuilder是谁，不知道使用哪个builder的子类
+Director类不知道自己使用的究竟是Bui1der类的哪个子类也好。
+正是因为“只有不知道子类才能替换” 

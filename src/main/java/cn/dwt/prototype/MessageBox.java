@@ -1,7 +1,7 @@
 package cn.dwt.prototype;
 
 /**
- * [一句话描述该类的功能]
+ * MessageBox
  *
  * @author : [Sammy]
  * @version : [v1.0]
