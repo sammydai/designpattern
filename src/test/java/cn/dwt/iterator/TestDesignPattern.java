@@ -2,6 +2,12 @@ package cn.dwt.iterator;
 
 import cn.dwt.adapter.Print;
 import cn.dwt.adapter.PrintBanner;
+import cn.dwt.builder.Director;
+import cn.dwt.builder.TextBuilder;
+import cn.dwt.prototype.Manager;
+import cn.dwt.prototype.MessageBox;
+import cn.dwt.prototype.Product;
+import cn.dwt.prototype.UnderlinePen;
 import cn.dwt.templatemethod.AbstractDisplay;
 import cn.dwt.templatemethod.CharDisplay;
 import org.junit.Test;
@@ -48,6 +54,27 @@ public class TestDesignPattern {
 	public void testTemplateMethod() {
 		AbstractDisplay charDisplay = new CharDisplay('o');
 		charDisplay.display();
+	}
+
+	@Test
+	public void testProtoType() {
+		Manager manager = new Manager();
+		MessageBox messageBox = new MessageBox();
+		UnderlinePen underlinePen = new UnderlinePen();
+		manager.register("messageBox",messageBox);
+		manager.register("underlinePen",underlinePen);
+		Product p1 = manager.create("underlinePen");
+		p1.use("aaa");
+		Product p2 = manager.create("messageBox");
+		p2.use("bbb");
+	}
+
+	@Test
+	public void testBuilder() {
+		TextBuilder textBuilder = new TextBuilder();
+		Director director = new Director(textBuilder);
+		director.constructor();
+		System.out.println(textBuilder.getResult());
 	}
 
 }

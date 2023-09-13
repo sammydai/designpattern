@@ -8,7 +8,7 @@ package cn.dwt.singleton;
  * @createTime : [2023/9/13 15:47]
  */
 public class SingletonSyn {
-	private static SingletonSyn instance = null;
+	private static volatile SingletonSyn instance = null;
 
 	private SingletonSyn() {
 	}
