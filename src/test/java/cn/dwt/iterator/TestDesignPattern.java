@@ -6,12 +6,19 @@ import cn.dwt.abstractfactory.FactoryProducer;
 import cn.dwt.abstractfactory.Shape;
 import cn.dwt.adapter.Print;
 import cn.dwt.adapter.PrintBanner;
+import cn.dwt.bridge.CountDisplay;
+import cn.dwt.bridge.Display;
+import cn.dwt.bridge.StringDisplayImpl;
 import cn.dwt.builder.Director;
 import cn.dwt.builder.TextBuilder;
 import cn.dwt.prototype.Manager;
 import cn.dwt.prototype.MessageBox;
 import cn.dwt.prototype.Product;
 import cn.dwt.prototype.UnderlinePen;
+import cn.dwt.strategy.Hand;
+import cn.dwt.strategy.Player;
+import cn.dwt.strategy.ProbStrategy;
+import cn.dwt.strategy.WinningStrategy;
 import cn.dwt.templatemethod.AbstractDisplay;
 import cn.dwt.templatemethod.CharDisplay;
 import org.junit.Test;
@@ -113,6 +120,45 @@ public class TestDesignPattern {
 
 		//调用 Green 的 fill 方法
 		color2.fill();
+	}
+
+	@Test
+	public void testBridge() {
+		Display d1 = new Display(new StringDisplayImpl("Hello, China."));
+		Display d2 = new CountDisplay(new StringDisplayImpl("Hello, World."));
+		CountDisplay d3 = new CountDisplay(new StringDisplayImpl("Hello, Universe."));
+		d1.display();
+		d2.display();
+		d3.display();
+		d3.multiDisplay(5);
+	}
+
+	@Test
+	public void testStrategy(String[] args) {
+		int seed1 = Integer.parseInt(args[0]);
+		int seed2 = Integer.parseInt(args[1]);
+		Player player1 = new Player("Taro", new WinningStrategy(seed1));
+		Player player2 = new Player("Hana", new ProbStrategy(seed2));
+		for (int i = 0; i < 10000; i++) {
+			Hand nextHand1 = player1.nextHand();
+			Hand nextHand2 = player2.nextHand();
+			if (nextHand1.isStrongerThan(nextHand2)) {
+				System.out.println("Winner:" + player1);
+				player1.win();
+				player2.lose();
+			} else if (nextHand2.isStrongerThan(nextHand1)) {
+				System.out.println("Winner:" + player2);
+				player1.lose();
+				player2.win();
+			} else {
+				System.out.println("Even...");
+				player1.even();
+				player2.even();
+			}
+		}
+		System.out.println("Total result:");
+		System.out.println(player1.toString());
+		System.out.println(player2.toString());
 	}
 
 }
